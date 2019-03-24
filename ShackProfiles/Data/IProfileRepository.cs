@@ -11,7 +11,7 @@ namespace ShackProfiles.Data
     {
         Task<ShackProfile> AddProfile(ProfileToModify profileToCreate);
         Task<ShackProfile> UpdateProfile(ProfileToModify profile);
-        Task<ShackProfile> ViewProfile(ProfileToView shackname);
+        Task<ShackProfile> ViewProfile(string shackname);
         Task<ShackProfile[]> ViewProfiles();
         Task<bool> DeleteProfile(ProfileToModify profile);
         Task<bool> ProfileExists(string shacker);

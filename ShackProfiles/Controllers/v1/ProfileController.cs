@@ -54,14 +54,14 @@ namespace ShackProfiles.Controllers.v1
             return BadRequest("Could not delete Profile, see TFO for details");
         }
 
-        [HttpGet("ViewProfile")]
-        public async Task<IActionResult> ViewProfile([FromBody]ProfileToView shackname)
+        [HttpGet("{shackname}")]
+        public async Task<IActionResult> ViewProfile(string shackname)
         {
             var shackProfile = await _repo.ViewProfile(shackname);
 
             if (shackProfile != null)
                 return Ok(shackProfile);
-            return BadRequest("See TFO");
+            return BadRequest();
         }
 
         [HttpGet]

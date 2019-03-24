@@ -93,9 +93,9 @@ namespace ShackProfiles.Data
             return false;
         }
 
-        public async Task<ShackProfile> ViewProfile(ProfileToView shackname)
+        public async Task<ShackProfile> ViewProfile(string shackname)
         {
-            var shacker = shackname.Shackname.ToUpper();
+            var shacker = shackname.ToUpper();
             if (await ProfileExists(shacker))
             {
                 var profileToView = await _context.ShackProfiles.FirstOrDefaultAsync(x => x.Shackname == shacker);
