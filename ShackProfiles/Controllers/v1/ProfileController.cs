@@ -72,5 +72,12 @@ namespace ShackProfiles.Controllers.v1
             return Ok(profiles);
         }
 
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile(ProfileToModify profile)
+        {
+            var result = await _repo.UpdateProfile(profile);
+
+            return Ok(result);
+        }
     }
 }

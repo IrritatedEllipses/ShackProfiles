@@ -8,7 +8,6 @@ using ShackProfiles.Models;
 using Newtonsoft.Json;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ShackProfiles.Models.Dtos;
 
 namespace ShackProfiles.Data
 {
@@ -45,7 +44,8 @@ namespace ShackProfiles.Data
         {
             if (await ValidateShackname(profile))
             {
-                var profileToDelete = await _context.ShackProfiles.FirstOrDefaultAsync(x => x.Shackname == profile.Shackname.ToUpper());
+                var profileToDelete = await _context.ShackProfiles
+                    .FirstOrDefaultAsync(x => x.Shackname == profile.Shackname.ToUpper());
 
                 _context.ShackProfiles.Remove(profileToDelete);
                 _context.SaveChanges();
@@ -58,16 +58,29 @@ namespace ShackProfiles.Data
         public async Task<bool> ProfileExists(string shacker)
         {
             shacker = shacker.ToUpper();
-            var shackerExists = await _context.ShackProfiles.FirstOrDefaultAsync(x => x.Shackname == shacker);
+            var shackerExists = await _context.ShackProfiles
+                .FirstOrDefaultAsync(x => x.Shackname == shacker);
 
             if (shackerExists != null)
                 return true;
             return false;
         }
 
-        public Task<ShackProfile> UpdateProfile(ProfileToModify profile)
+        public async Task<ShackProfile> UpdateProfile(ProfileToModify profile)
         {
-            throw new NotImplementedException();
+            profile.Shackname = profile.Shackname.ToUpper();
+            
+
+            var existingProfile = await _context.ShackProfiles
+                .FirstOrDefaultAsync(x => x.Shackname == profile.Shackname);
+            profile.Id = existingProfile.Id;
+
+            _mapper.Map(profile, existingProfile);
+
+            if (await _context.SaveChangesAsync() > 0)
+                return profile;
+
+            throw new Exception($"Updating {profile.Shackname} failed");
         }
 
         public async Task<bool> ValidateShackname(ProfileToModify profile)
@@ -98,7 +111,9 @@ namespace ShackProfiles.Data
             var shacker = shackname.ToUpper();
             if (await ProfileExists(shacker))
             {
-                var profileToView = await _context.ShackProfiles.FirstOrDefaultAsync(x => x.Shackname == shacker);
+                var profileToView = await _context.ShackProfiles
+                    .FirstOrDefaultAsync(x => x.Shackname == shacker);
+
                 return profileToView;
             }
             return null;
