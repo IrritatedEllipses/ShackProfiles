@@ -9,8 +9,8 @@ using ShackProfiles.Data;
 namespace ShackProfiles.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190320202004_initMigration")]
-    partial class initMigration
+    [Migration("20190325151831_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace ShackProfiles.Migrations
 
             modelBuilder.Entity("ShackProfiles.Models.ShackProfile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Shackname")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BattlenetId");
@@ -37,9 +37,6 @@ namespace ShackProfiles.Migrations
 
                     b.Property<string>("PSNName");
 
-                    b.Property<string>("Shackname")
-                        .IsRequired();
-
                     b.Property<string>("SteamName");
 
                     b.Property<string>("SteamUrl");
@@ -52,7 +49,7 @@ namespace ShackProfiles.Migrations
 
                     b.Property<string>("XboxGamertag");
 
-                    b.HasKey("Id");
+                    b.HasKey("Shackname");
 
                     b.ToTable("ShackProfiles");
                 });

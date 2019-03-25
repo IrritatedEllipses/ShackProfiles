@@ -69,11 +69,9 @@ namespace ShackProfiles.Data
         public async Task<ShackProfile> UpdateProfile(ProfileToModify profile)
         {
             profile.Shackname = profile.Shackname.ToUpper();
-            
 
             var existingProfile = await _context.ShackProfiles
                 .FirstOrDefaultAsync(x => x.Shackname == profile.Shackname);
-            profile.Id = existingProfile.Id;
 
             _mapper.Map(profile, existingProfile);
 

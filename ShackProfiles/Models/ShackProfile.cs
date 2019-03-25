@@ -8,9 +8,8 @@ namespace ShackProfiles.Models
 {
     public class ShackProfile
     {
-        public int Id { get; set; }
-
         [Required]
+        [Key]
         public string Shackname { get; set; }
 
         public bool Verified { get; set; }

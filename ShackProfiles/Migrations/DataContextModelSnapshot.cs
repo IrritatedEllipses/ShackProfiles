@@ -18,7 +18,7 @@ namespace ShackProfiles.Migrations
 
             modelBuilder.Entity("ShackProfiles.Models.ShackProfile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Shackname")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("BattlenetId");
@@ -35,9 +35,6 @@ namespace ShackProfiles.Migrations
 
                     b.Property<string>("PSNName");
 
-                    b.Property<string>("Shackname")
-                        .IsRequired();
-
                     b.Property<string>("SteamName");
 
                     b.Property<string>("SteamUrl");
@@ -50,7 +47,7 @@ namespace ShackProfiles.Migrations
 
                     b.Property<string>("XboxGamertag");
 
-                    b.HasKey("Id");
+                    b.HasKey("Shackname");
 
                     b.ToTable("ShackProfiles");
                 });

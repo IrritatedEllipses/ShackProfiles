@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShackProfiles.Migrations
 {
-    public partial class initMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,6 @@ namespace ShackProfiles.Migrations
                 name: "ShackProfiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
                     Shackname = table.Column<string>(nullable: false),
                     Verified = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -30,7 +28,7 @@ namespace ShackProfiles.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShackProfiles", x => x.Id);
+                    table.PrimaryKey("PK_ShackProfiles", x => x.Shackname);
                 });
         }
 
