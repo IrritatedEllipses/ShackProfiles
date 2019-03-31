@@ -8,6 +8,7 @@ using ShackProfiles.Models;
 using Newtonsoft.Json;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShackProfiles.Helpers;
 
 namespace ShackProfiles.Data
 {
@@ -117,10 +118,12 @@ namespace ShackProfiles.Data
             return null;
         }
 
-        public async Task<ShackProfile[]> ViewProfiles()
+        public async Task<PagedList<ShackProfile>> ViewProfiles(ShackProfileParams profileParams)
         {
-            var profiles = _context.ShackProfiles.AsQueryable();
-            return await profiles.ToArrayAsync();
+            var profiles = _context.ShackProfiles;
+
+            return await PagedList<ShackProfile>.CreateAsync(profiles, profileParams.PageNumber, profileParams.PageSize);
+            
         }
     }
 }

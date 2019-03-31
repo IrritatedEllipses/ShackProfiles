@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShackProfiles.Migrations
 {
-    public partial class InitMigration : Migration
+    public partial class InitMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,7 @@ namespace ShackProfiles.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Shackname = table.Column<string>(nullable: false),
+                    DisplayShackname = table.Column<string>(nullable: true),
                     Verified = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     TimeZone = table.Column<string>(nullable: true),

@@ -1,4 +1,5 @@
-﻿using ShackProfiles.Models;
+﻿using ShackProfiles.Helpers;
+using ShackProfiles.Models;
 using ShackProfiles.Models.Dtos;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace ShackProfiles.Data
         Task<ShackProfile> AddProfile(ProfileToModify profileToCreate);
         Task<ShackProfile> UpdateProfile(ProfileToModify profile);
         Task<ShackProfile> ViewProfile(string shackname);
-        Task<ShackProfile[]> ViewProfiles();
+        Task<PagedList<ShackProfile>> ViewProfiles(ShackProfileParams profileParams);
         Task<bool> DeleteProfile(ProfileToModify profile);
         Task<bool> ProfileExists(string shacker);
         Task<bool> ValidateShackname(ProfileToModify profile);

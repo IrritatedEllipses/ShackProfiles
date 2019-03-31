@@ -9,8 +9,8 @@ using ShackProfiles.Data;
 namespace ShackProfiles.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190331014022_InitMigration")]
-    partial class InitMigration
+    [Migration("20190331041108_InitMig")]
+    partial class InitMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,8 @@ namespace ShackProfiles.Migrations
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("DiscordId");
+
+                    b.Property<string>("DisplayShackname");
 
                     b.Property<string>("EpicGamesId");
 

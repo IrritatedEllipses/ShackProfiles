@@ -27,6 +27,8 @@ namespace ShackProfiles.Migrations
 
                     b.Property<string>("DiscordId");
 
+                    b.Property<string>("DisplayShackname");
+
                     b.Property<string>("EpicGamesId");
 
                     b.Property<string>("NintendoId");

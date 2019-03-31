@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShackProfiles.Data;
+using ShackProfiles.Helpers;
 using ShackProfiles.Models;
 using ShackProfiles.Models.Dtos;
 
@@ -65,9 +66,12 @@ namespace ShackProfiles.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewProfiles()
+        public async Task<IActionResult> ViewProfiles([FromQuery]ShackProfileParams profileParams)
         {
-            var profiles = await _repo.ViewProfiles();
+            var profiles = await _repo.ViewProfiles(profileParams);
+
+            Response.AddPagination(profiles.CurrentPage, profiles.PageSize, 
+                profiles.TotalCount, profiles.TotalPages);
 
             return Ok(profiles);
         }
