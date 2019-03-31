@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShackProfiles.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,6 +11,8 @@ namespace ShackProfiles.Migrations
                 name: "ShackProfiles",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Shackname = table.Column<string>(nullable: false),
                     Verified = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -18,7 +20,7 @@ namespace ShackProfiles.Migrations
                     SteamName = table.Column<string>(nullable: true),
                     SteamUrl = table.Column<string>(nullable: true),
                     DiscordId = table.Column<string>(nullable: true),
-                    PSNName = table.Column<string>(nullable: true),
+                    PSN = table.Column<string>(nullable: true),
                     XboxGamertag = table.Column<string>(nullable: true),
                     NintendoId = table.Column<string>(nullable: true),
                     OriginId = table.Column<string>(nullable: true),
@@ -28,7 +30,7 @@ namespace ShackProfiles.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShackProfiles", x => x.Shackname);
+                    table.PrimaryKey("PK_ShackProfiles", x => x.Id);
                 });
         }
 

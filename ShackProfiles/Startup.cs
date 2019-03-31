@@ -32,6 +32,7 @@ namespace ShackProfiles
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
+            services.AddTransient<Seed>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
 
             // Swagger Config
@@ -53,7 +54,7 @@ namespace ShackProfiles
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +65,7 @@ namespace ShackProfiles
                 app.UseHsts();
             }
 
+            //seeder.SeedShackers();
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseSwagger();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,8 +9,9 @@ namespace ShackProfiles.Models
 {
     public class ShackProfile
     {
+        public int Id { get; set; }
+
         [Required]
-        [Key]
         public string Shackname { get; set; }
 
         public bool Verified { get; set; }
@@ -18,7 +20,7 @@ namespace ShackProfiles.Models
         public string SteamName { get; set; }
         public string SteamUrl { get; set; }
         public string DiscordId { get; set; }
-        public string PSNName { get; set; }
+        public string PSN { get; set; }
         public string XboxGamertag { get; set; }
         public string NintendoId { get; set; }
         public string OriginId { get; set; }
