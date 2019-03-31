@@ -14,6 +14,7 @@ namespace ShackProfiles.Models
         [Required]
         public string Shackname { get; set; }
 
+        public string DisplayShackname { get; set; }
         public bool Verified { get; set; }
         public DateTime CreatedAt { get; set; }
         public string TimeZone { get; set; }

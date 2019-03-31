@@ -23,6 +23,7 @@ namespace ShackProfiles.Data
 
             foreach (var shacker in shackers)
             {
+                shacker.DisplayShackname = shacker.Shackname;
                 shacker.Shackname = shacker.Shackname.ToUpper();
 
                 _context.ShackProfiles.Add(shacker);
