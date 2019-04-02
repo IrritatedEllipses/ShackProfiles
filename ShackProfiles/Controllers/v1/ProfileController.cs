@@ -70,7 +70,7 @@ namespace ShackProfiles.Controllers.v1
         {
             var profiles = await _repo.ViewProfiles(profileParams);
 
-            Response.AddPagination(profiles.CurrentPage, profiles.PageSize, 
+            Response.AddPagination(profiles.CurrentPage, profiles.PageSize,
                 profiles.TotalCount, profiles.TotalPages);
 
             return Ok(profiles);
@@ -82,6 +82,14 @@ namespace ShackProfiles.Controllers.v1
             var result = await _repo.UpdateProfile(profile);
 
             return Ok(result);
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> AllProfiles(ShackProfileParams profileParams)
+        {
+            var allProfiles = await _repo.ViewProfiles();
+
+            return Ok(allProfiles);
         }
     }
 }

@@ -16,16 +16,18 @@ namespace ShackProfiles.Data
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IAuthorizeRepository _auth;
 
-        public ProfileRepository(DataContext context, IMapper mapper)
+        public ProfileRepository(DataContext context, IMapper mapper, IAuthorizeRepository auth)
         {
             _context = context;
             _mapper = mapper;
+            _auth = auth;
         }
 
         public async Task<ShackProfile> AddProfile(ProfileToModify profileToCreate)
         {
-            if (await ValidateShackname(profileToCreate))
+            if (await _auth.ValidateShackname(profileToCreate))
             {
                 var shacker = _mapper.Map<ShackProfile>(profileToCreate);
 
@@ -43,7 +45,7 @@ namespace ShackProfiles.Data
 
         public async Task<bool> DeleteProfile(ProfileToModify profile)
         {
-            if (await ValidateShackname(profile))
+            if (await _auth.ValidateShackname(profile))
             {
                 var profileToDelete = await _context.ShackProfiles
                     .FirstOrDefaultAsync(x => x.Shackname == profile.Shackname.ToUpper());
@@ -82,29 +84,6 @@ namespace ShackProfiles.Data
             throw new Exception($"Updating {profile.Shackname} failed");
         }
 
-        public async Task<bool> ValidateShackname(ProfileToModify profile)
-        {
-            var client = new HttpClient();
-            var verifyUri = new Uri("https://winchatty.com/v2/verifyCredentials/");
-
-            var credsToVerify = new FormUrlEncodedContent(new []
-            {
-                new KeyValuePair<string, string>("username", profile.Shackname),
-                new KeyValuePair<string, string>("password", profile.Password),
-            });
-
-            var response = await client.PostAsync(verifyUri, credsToVerify);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var res = await response.Content.ReadAsStringAsync();
-                WinChattyVerify result = JsonConvert.DeserializeObject<WinChattyVerify>(res);
-
-                return result.IsValid;
-            }
-            return false;
-        }
-
         public async Task<ShackProfile> ViewProfile(string shackname)
         {
             var shacker = shackname.ToUpper();
@@ -116,6 +95,13 @@ namespace ShackProfiles.Data
                 return profileToView;
             }
             return null;
+        }
+
+        public async Task<List<ShackProfile>> ViewProfiles()
+        {
+            List<ShackProfile> profiles = await _context.ShackProfiles.ToListAsync<ShackProfile>();
+
+            return profiles;
         }
 
         public async Task<PagedList<ShackProfile>> ViewProfiles(ShackProfileParams profileParams)

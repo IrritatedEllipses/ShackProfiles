@@ -38,6 +38,7 @@ namespace ShackProfiles
             services.AddAutoMapper();
             services.AddTransient<Seed>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IAuthorizeRepository, AuthorizeRepository>();
 
             // Swagger Config
             services.AddSwaggerGen(c =>
