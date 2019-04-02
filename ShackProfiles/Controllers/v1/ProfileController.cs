@@ -84,8 +84,8 @@ namespace ShackProfiles.Controllers.v1
             return Ok(result);
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> AllProfiles(ShackProfileParams profileParams)
+        [HttpGet("all")]
+        public async Task<IActionResult> ViewAllProfiles()
         {
             var allProfiles = await _repo.ViewProfiles();
 
