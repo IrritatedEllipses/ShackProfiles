@@ -19,7 +19,12 @@ namespace ShackProfiles.Data
         public void SeedShackers()
         {
             var shackerData = System.IO.File.ReadAllText("data\\ShackProfiles.json");
-            var shackers = JsonConvert.DeserializeObject<List<ShackProfile>>(shackerData);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var shackers = JsonConvert.DeserializeObject<List<ShackProfile>>(shackerData, settings);
+            
 
             foreach (var shacker in shackers)
             {

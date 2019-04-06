@@ -34,10 +34,18 @@ namespace ShackProfiles.Controllers.v1
 
             if (res.Verified)
             {
-                return Ok(res);
+                return CreatedAtRoute("");
             }
 
             return BadRequest("Could not create Profile, see TFO for details");
+        }
+
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile(ProfileToModify profile)
+        {
+            var result = await _repo.UpdateProfile(profile);
+
+            return Ok(result);
         }
 
         [HttpDelete("DeleteProfile")]
@@ -66,22 +74,11 @@ namespace ShackProfiles.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewProfiles([FromQuery]ShackProfileParams profileParams)
+        public async Task<IActionResult> ViewProfiles()
         {
-            var profiles = await _repo.ViewProfiles(profileParams);
-
-            Response.AddPagination(profiles.CurrentPage, profiles.PageSize,
-                profiles.TotalCount, profiles.TotalPages);
+            var profiles = await _repo.ViewProfiles();
 
             return Ok(profiles);
-        }
-
-        [HttpPut("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile(ProfileToModify profile)
-        {
-            var result = await _repo.UpdateProfile(profile);
-
-            return Ok(result);
         }
 
         [HttpGet("all")]
@@ -90,6 +87,14 @@ namespace ShackProfiles.Controllers.v1
             var allProfiles = await _repo.ViewProfiles();
 
             return Ok(allProfiles);
+        }
+
+        [HttpGet("{platform}")]
+        public async Task<IActionResult> ViewPlatform(string platform)
+        {
+            var selectedProfiles = await _repo.ViewProfilesByPlatform(platform);
+
+            return Ok(selectedProfiles);
         }
     }
 }

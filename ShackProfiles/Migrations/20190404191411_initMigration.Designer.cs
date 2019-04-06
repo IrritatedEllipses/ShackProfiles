@@ -9,8 +9,8 @@ using ShackProfiles.Data;
 namespace ShackProfiles.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190331041108_InitMig")]
-    partial class InitMig
+    [Migration("20190404191411_initMigration")]
+    partial class initMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

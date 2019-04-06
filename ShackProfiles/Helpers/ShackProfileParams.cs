@@ -17,5 +17,14 @@ namespace ShackProfiles.Helpers
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value ; }
         }
 
+        public bool SteamName { get; set; }
+        public bool DiscordId { get; set; }
+        public bool PSN { get; set; }
+        public bool XboxGamertag { get; set; }
+        public bool NintendoId { get; set; }
+        public bool OriginId { get; set; }
+        public bool BattlenetId { get; set; }
+        public bool UplayId { get; set; }
+        public bool EpicGamesId { get; set; }
     }
 }

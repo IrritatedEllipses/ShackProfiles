@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShackProfiles.Helpers;
+//using System.Linq.Dynamic;
 
 namespace ShackProfiles.Data
 {
@@ -55,17 +56,7 @@ namespace ShackProfiles.Data
 
                 return true;
             }
-            return false;
-        }
 
-        public async Task<bool> ProfileExists(string shacker)
-        {
-            shacker = shacker.ToUpper();
-            var shackerExists = await _context.ShackProfiles
-                .FirstOrDefaultAsync(x => x.Shackname == shacker);
-
-            if (shackerExists != null)
-                return true;
             return false;
         }
 
@@ -82,6 +73,17 @@ namespace ShackProfiles.Data
                 return profile;
 
             throw new Exception($"Updating {profile.Shackname} failed");
+        }
+
+        public async Task<bool> ProfileExists(string shacker)
+        {
+            shacker = shacker.ToUpper();
+            var shackerExists = await _context.ShackProfiles
+                .FirstOrDefaultAsync(x => x.Shackname == shacker);
+
+            if (shackerExists != null)
+                return true;
+            return false;
         }
 
         public async Task<ShackProfile> ViewProfile(string shackname)
@@ -104,12 +106,47 @@ namespace ShackProfiles.Data
             return profiles;
         }
 
-        public async Task<PagedList<ShackProfile>> ViewProfiles(ShackProfileParams profileParams)
+        public async Task<List<ShackProfile>> ViewProfilesByPlatform(string platform)
         {
-            var profiles = _context.ShackProfiles;
+            platform = platform.ToLower();
+            var profilesToQuery = _context.ShackProfiles.AsQueryable();
+            IQueryable<ShackProfile> profiles;
 
-            return await PagedList<ShackProfile>.CreateAsync(profiles, profileParams.PageNumber, profileParams.PageSize);
-            
+            switch (platform)
+            {
+                case "steamname":
+                    profiles = profilesToQuery.Where(x => x.SteamName != null);                    
+                    break;
+                case "discordid":
+                    profiles = profilesToQuery.Where(x => x.DiscordId != null);                    
+                    break;
+                case "psn":
+                    profiles = profilesToQuery.Where(x => x.PSN != null);
+                    break;
+                case "xboxgamertag":
+                    profiles = profilesToQuery.Where(x => x.XboxGamertag != null);
+                    break;
+                case "nintendoid":
+                    profiles = profilesToQuery.Where(x => x.NintendoId != null);
+                    break;
+                case "originid":
+                    profiles = profilesToQuery.Where(x => x.OriginId != null);
+                    break;
+                case "battlenetid":
+                    profiles = profilesToQuery.Where(x => x.BattlenetId != null);
+                    break;
+                case "uplayid":
+                    profiles = profilesToQuery.Where(x => x.UplayId != null);
+                    break;
+                case "epicgamesid":
+                    profiles = profilesToQuery.Where(x => x.EpicGamesId != null);
+                    break;
+                default:
+                    profiles = profilesToQuery;
+                    break;
+            }
+
+            return await profiles.ToListAsync<ShackProfile>();
         }
     }
 }

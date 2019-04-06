@@ -14,7 +14,7 @@ namespace ShackProfiles.Data
         Task<ShackProfile> UpdateProfile(ProfileToModify profile);
         Task<ShackProfile> ViewProfile(string shackname);
         Task<List<ShackProfile>> ViewProfiles();
-        Task<PagedList<ShackProfile>> ViewProfiles(ShackProfileParams profileParams);
+        Task<List<ShackProfile>> ViewProfilesByPlatform(string platform);
         Task<bool> DeleteProfile(ProfileToModify profile);
         Task<bool> ProfileExists(string shacker);
     }
